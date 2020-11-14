@@ -20,17 +20,17 @@ This repo mainly exists to remind me how to fix this problem in the future. It's
   wpcli:
     image: wpcli
     volumes:
-      - ${WP_CORE}:/var/www/html
-      - ${WP_CONTENT}:/var/www/html/wp-content
+      - ./:/var/www/html
+      - ./wp-content:/var/www/html/wp-content
     depends_on:
       - db
-    entrypoint: wp
-    labels:
-      - "traefik.enable=false"
     entrypoint: /bin/wp-cli.phar
     command: --info
   ```
-  The important part here is the `entrypoint: /bin/wp-cli.phar` part. This is to override Tatemz's sh script that runs as www-data.
+  The important parts above:
+    `image: wpcli` To select the image we just built.
+    and
+    `entrypoint: /bin/wp-cli.phar` To override Tatemz's sh script that runs as www-data.
 
   You might ask why even base this on tatemz docker, since that script is probably the main thing being provided, and you might be right.
 
